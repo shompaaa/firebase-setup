@@ -3,7 +3,7 @@ import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const Login = () => {
 
-    const {loginUser} = useContext(AuthContext)
+    const {loginUser,googleLogin,setUser} = useContext(AuthContext)
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -12,6 +12,16 @@ const Login = () => {
     console.log(email, password);
     loginUser(email,password)
   };
+
+
+const handleGoogleLogin = ()=>{
+  googleLogin().then(result =>setUser(result.user))
+}
+
+
+
+
+
   return (
     <div className="w-[20%] mx-auto min-w-125 border-2 border-red-400 p-2 rounded-xl">
       <form onSubmit={handleLogin}>
@@ -39,6 +49,9 @@ const Login = () => {
           </button>
         </div>
       </form>
+      <div className="text-center">
+        <button onClick={handleGoogleLogin} className="btn btn-secondary mt-3">Google Login</button>
+      </div>
     </div>
   );
 };
