@@ -3,9 +3,10 @@ import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const Register = () => {
   const [error, setError] = useState("");
-  const { registerUser } = useContext(AuthContext);
+  const { registerUser,setUser } = useContext(AuthContext);
 
   const specialCharacter = /[!@#$%^&*(),.?":{}|<>]/;
+  const passwordCase = /^(?=.*[a-z])(?=.*[A-Z]).+$/;
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -14,12 +15,7 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
-    console.log(name, photo, email, password, confirmPassword);
-    registerUser(email, password);
-
-
-    //Error Reset
-    setError('')
+   
 
     if(password.length < 6){
         setError('password must be at least 6 characters')
@@ -34,6 +30,19 @@ const Register = () => {
         setError('must include special characters (e.g: @,#,$ etc)')
         return
     }
+    else if(!passwordCase.test(password)){
+      setError('should have at least one uppercase/lowercase')
+    }
+
+    //Error Reset
+    setError('')
+
+     console.log(name, photo, email, password, confirmPassword);
+    registerUser(email, password).then(result =>setUser(result.user));
+
+
+
+
 
   };
   return (
