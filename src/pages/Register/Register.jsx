@@ -39,12 +39,11 @@ const Register = () => {
 
      console.log(name, photo, email, password, confirmPassword);
     registerUser(email, password).then(result =>setUser(result.user));
-
-
-
-
+    e.target.reset()
 
   };
+
+
   return (
     <div className="w-[20%] mx-auto min-w-125 border-2 border-red-400 p-2 rounded-xl">
       <form onSubmit={handleRegister}>

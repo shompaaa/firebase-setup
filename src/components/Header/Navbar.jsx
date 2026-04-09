@@ -4,7 +4,11 @@ import "./Navbar.css";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user,userLogout } = useContext(AuthContext);
+
+  const handleLogout = () =>{
+    userLogout().then(result =>console.log(result))
+  }
   const links = (
     <>
       <li>
@@ -51,7 +55,7 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end">{user && <p>{user.email}</p>}</div>
+      <div className="navbar-end">{user && <p>{user.email} <br /> <button onClick={handleLogout} className="btn btn-secondary">Logout</button></p>}</div>
     </div>
   );
 };
