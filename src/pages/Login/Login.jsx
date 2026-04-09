@@ -1,8 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
+import { useLocation, useNavigate } from "react-router";
 
 const Login = () => {
-  const { loginUser, googleLogin, setUser } = useContext(AuthContext);
+  const { loginUser, googleLogin, setUser,user } = useContext(AuthContext);
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -16,6 +19,12 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin().then((result) => setUser(result.user));
   };
+
+  useEffect(()=>{
+    if(user){
+      navigate(location?.state)
+    }
+  },[user])
 
   return (
     <div className="w-[20%] mx-auto min-w-125 border-2 border-red-400 p-2 rounded-xl">
